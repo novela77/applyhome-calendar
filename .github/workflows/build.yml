@@ -25,8 +25,8 @@ jobs:
       - name: 청약일정 수집 → ics / csv
         run: |
           set -euo pipefail
-          python3 applyhome_calendar.py --next 4 --region 서울 --apt --remndr --ics > docs/seoul.ics
-          python3 applyhome_calendar.py --next 4 --region 서울 --apt --remndr       > docs/seoul.csv
+          python3 applyhome_calendar.py --next 4 --region 서울 --apt --remndr --exclude 2순위 --ics > docs/seoul.ics
+          python3 applyhome_calendar.py --next 4 --region 서울 --apt --remndr --exclude 2순위       > docs/seoul.csv
           echo "이벤트 $(grep -c '^BEGIN:VEVENT' docs/seoul.ics)건"
 
       - name: 내용이 바뀐 경우에만 커밋

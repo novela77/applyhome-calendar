@@ -1,8 +1,6 @@
 date,region,name,kind,type,house_secd,house_manage_no,pblanc_no,detail_url
 20260701,서울,드파인 아르티아,아파트,1순위,01,2026000241,2026000241,/ai/aia/selectAPTLttotPblancDetail.do
 20260701,서울,장위 푸르지오 마크원,아파트,1순위,01,2026000275,2026000275,/ai/aia/selectAPTLttotPblancDetail.do
-20260702,서울,드파인 아르티아,아파트,2순위,01,2026000241,2026000241,/ai/aia/selectAPTLttotPblancDetail.do
-20260702,서울,장위 푸르지오 마크원,아파트,2순위,01,2026000275,2026000275,/ai/aia/selectAPTLttotPblancDetail.do
 20260706,서울,써밋 더힐,무순위,무순위,04,2026910169,2026910169,/ai/aia/selectAPTRemndrLttotPblancDetailView.do
 20260707,서울,에비뉴 청계 II(3차),무순위,임의공급,11,2026940136,2026940136,/ai/aia/selectAPTRemndrLttotPblancDetailView.do
 20260708,서울,대방역 여의도 더로드캐슬(4차),무순위,무순위,04,2026910166,2026910166,/ai/aia/selectAPTRemndrLttotPblancDetailView.do
@@ -14,11 +12,9 @@ date,region,name,kind,type,house_secd,house_manage_no,pblanc_no,detail_url
 20260714,서울,동작 센트럴 동문 디 이스트,아파트,1순위,01,2026000153,2026000153,/ai/aia/selectAPTLttotPblancDetail.do
 20260714,서울,청계 노르웨이숲(10차),무순위,무순위,04,2026910175,2026910175,/ai/aia/selectAPTRemndrLttotPblancDetailView.do
 20260715,서울,동작 센트럴 동문 디 이스트,아파트,1순위,01,2026000153,2026000153,/ai/aia/selectAPTLttotPblancDetail.do
-20260716,서울,동작 센트럴 동문 디 이스트,아파트,2순위,01,2026000153,2026000153,/ai/aia/selectAPTLttotPblancDetail.do
 20260727,서울,e편한세상 강동 프레스티지원,무순위,불법행위재공급,06,2026930024,2026930024,/ai/aia/selectAPTRemndrLttotPblancDetailView.do
 20260727,서울,월계 중흥S-클래스 리비에르,아파트,특별공급,01,2026000355,2026000355,/ai/aia/selectAPTLttotPblancDetail.do
 20260727,서울,해링턴 플레이스 노원 센트럴,무순위,임의공급,11,2026940157,2026940157,/ai/aia/selectAPTRemndrLttotPblancDetailView.do
 20260728,서울,아크로 리버스카이,무순위,무순위,04,2026910194,2026910194,/ai/aia/selectAPTRemndrLttotPblancDetailView.do
 20260728,서울,월계 중흥S-클래스 리비에르,아파트,1순위,01,2026000355,2026000355,/ai/aia/selectAPTLttotPblancDetail.do
 20260729,서울,월계 중흥S-클래스 리비에르,아파트,1순위,01,2026000355,2026000355,/ai/aia/selectAPTLttotPblancDetail.do
-20260730,서울,월계 중흥S-클래스 리비에르,아파트,2순위,01,2026000355,2026000355,/ai/aia/selectAPTLttotPblancDetail.do

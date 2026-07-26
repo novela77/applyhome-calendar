@@ -15,6 +15,7 @@
     --remndr         무순위/취소후재공급(줍줍) 계열만
     --ics            iCalendar(.ics) 형식으로 출력 (하루 전 알림 포함)
     --next <N>       오늘이 속한 달부터 N개월치 자동 지정 (KST 기준)
+    --exclude <구분> 해당 접수구분 제외 (예: --exclude 2순위). 여러 번 지정 가능
                      --apt 와 함께 쓰면 둘 다 포함. 아무것도 안 주면 전체.
 """
 import csv
@@ -170,6 +171,7 @@ def main():
     argv = sys.argv[1:]
     months, region, kinds, as_json = [], None, set(), False
     as_ics = False
+    exclude = set()
     i = 0
     while i < len(argv):
         a = argv[i]
@@ -181,6 +183,11 @@ def main():
             kinds.add("아파트")
         elif a == "--remndr":
             kinds.add("무순위")
+        elif a == "--exclude":
+            i += 1
+            exclude.add(argv[i])
+        elif a.startswith("--exclude="):
+            exclude.add(a.split("=", 1)[1])
         elif a == "--region":
             i += 1
             region = argv[i]
@@ -204,6 +211,8 @@ def main():
         rows = [r for r in rows if r["region"] == region]
     if kinds:
         rows = [r for r in rows if r["kind"] in kinds]
+    if exclude:
+        rows = [r for r in rows if r["type"] not in exclude]
 
     if as_ics:
         sys.stdout.write(to_ics(rows))

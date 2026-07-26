@@ -9,7 +9,7 @@
 https://raw.githubusercontent.com/novela77/applyhome-calendar/main/docs/seoul.ics
 ```
 
-현재 발행 조건: **서울 · 아파트 + 무순위(줍줍), 이번 달부터 4개월치**
+현재 발행 조건: **서울 · 아파트 + 무순위(줍줍) · 2순위 제외, 이번 달부터 4개월치**
 
 - macOS 캘린더 → 파일 → 새로운 캘린더 구독
 - iOS 설정 → 앱 → 캘린더 → 계정 → 계정 추가 → 기타 → 구독 캘린더 추가
@@ -72,5 +72,5 @@ python3 applyhome_calendar.py 202607 --json                           # JSON
 
 ## 조건 바꾸기
 
-`.github/workflows/build.yml`의 생성 명령에서 `--region` / `--apt` / `--remndr` / `--next` 를
+`.github/workflows/build.yml`의 생성 명령에서 `--region` / `--apt` / `--remndr` / `--next` / `--exclude` 를
 수정하면 됩니다. 지역을 여러 개 두고 싶으면 파일명을 나눠 여러 줄로 생성하세요.
