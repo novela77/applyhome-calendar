@@ -6,7 +6,7 @@
 ## 구독 주소
 
 ```
-https://raw.githubusercontent.com/<OWNER>/applyhome-calendar/main/docs/seoul.ics
+https://raw.githubusercontent.com/novela77/applyhome-calendar/main/docs/seoul.ics
 ```
 
 현재 발행 조건: **서울 · 아파트 + 무순위(줍줍), 이번 달부터 4개월치**
