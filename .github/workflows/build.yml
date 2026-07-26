@@ -1,0 +1,46 @@
+name: build-ics
+
+on:
+  schedule:
+    - cron: "0 20 * * *"   # 매일 05:00 KST (UTC 20:00)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-ics
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 청약일정 수집 → ics / csv
+        run: |
+          set -euo pipefail
+          python3 applyhome_calendar.py --next 4 --region 서울 --apt --remndr --ics > docs/seoul.ics
+          python3 applyhome_calendar.py --next 4 --region 서울 --apt --remndr       > docs/seoul.csv
+          echo "이벤트 $(grep -c '^BEGIN:VEVENT' docs/seoul.ics)건"
+
+      - name: 내용이 바뀐 경우에만 커밋
+        run: |
+          set -uo pipefail
+          # DTSTAMP는 매 실행마다 바뀌므로 비교에서 제외 — 실제 일정 변화만 커밋한다
+          if git show HEAD:docs/seoul.ics > /tmp/prev.ics 2>/dev/null; then
+            if diff -q <(grep -v '^DTSTAMP' /tmp/prev.ics) <(grep -v '^DTSTAMP' docs/seoul.ics) > /dev/null; then
+              echo "변경 없음 — 커밋 생략"
+              exit 0
+            fi
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/seoul.ics docs/seoul.csv
+          git commit -m "chore: 청약일정 갱신 ($(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST'))"
+          git push
