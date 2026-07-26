@@ -17,6 +17,10 @@ https://raw.githubusercontent.com/novela77/applyhome-calendar/main/docs/seoul.ic
 
 종일 일정으로 등록되고 **하루 전 알림**(`VALARM TRIGGER:-P1D`)이 들어 있습니다.
 
+같은 단지·접수구분이 연속된 날에 걸쳐 있으면 **하나의 기간 일정으로 병합**합니다
+(예: 나흘 접수 → 4건이 아니라 1건, 제목에 `(4일 접수)` 표기).
+날짜가 하루라도 끊기면 별도 일정으로 둡니다. CSV는 병합 없이 일자별 원본을 유지합니다.
+
 ## 갱신 주기
 
 GitHub Actions가 매일 **05:00 KST**에 실행되며, 일정 내용이 실제로 바뀐 경우에만 커밋합니다.

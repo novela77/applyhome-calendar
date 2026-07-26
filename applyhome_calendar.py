@@ -132,6 +132,34 @@ def fold(line):
     return "\r\n".join(out)
 
 
+def merge_runs(rows):
+    """같은 단지·접수구분이 연속된 날에 걸쳐 있으면 하나의 기간 일정으로 합친다.
+
+    청약홈은 접수 기간을 날짜별 행으로 쪼개 내려주므로, 그대로 두면
+    나흘 접수가 캘린더에 4건으로 뜬다. 날짜가 하루라도 끊기면 별도 일정으로 둔다.
+    """
+    buckets = {}
+    for r in rows:
+        buckets.setdefault((r["pblanc_no"], r["type"], r["name"]), []).append(r)
+
+    out = []
+    for group in buckets.values():
+        group.sort(key=lambda r: r["date"])
+        run = [group[0]]
+        for prev, cur in zip(group, group[1:]):
+            gap = (datetime.datetime.strptime(cur["date"], "%Y%m%d")
+                   - datetime.datetime.strptime(prev["date"], "%Y%m%d")).days
+            if gap == 1:
+                run.append(cur)
+            else:
+                out.append({**run[0], "end_date": run[-1]["date"], "days": len(run)})
+                run = [cur]
+        out.append({**run[0], "end_date": run[-1]["date"], "days": len(run)})
+
+    out.sort(key=lambda x: (x["date"], x["region"], x["name"]))
+    return out
+
+
 def to_ics(rows, alarm_days=1):
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     L = ["BEGIN:VCALENDAR", "VERSION:2.0",
@@ -139,18 +167,20 @@ def to_ics(rows, alarm_days=1):
          "METHOD:PUBLISH", "X-WR-CALNAME:청약홈 청약일정",
          "X-WR-TIMEZONE:Asia/Seoul", "REFRESH-INTERVAL;VALUE=DURATION:PT12H",
          "X-PUBLISHED-TTL:PT12H"]
-    for r in rows:
+    for r in merge_runs(rows):
         d = r["date"]
-        end = (datetime.datetime.strptime(d, "%Y%m%d")
+        # DTEND는 비포함(exclusive)이라 마지막 날 +1
+        end = (datetime.datetime.strptime(r["end_date"], "%Y%m%d")
                + datetime.timedelta(days=1)).strftime("%Y%m%d")
         uid = f'{r["pblanc_no"]}-{d}-{r["type"]}@applyhome'
+        span = "" if r["days"] == 1 else f' ({r["days"]}일 접수)'
         L += ["BEGIN:VEVENT",
               f"UID:{esc(uid)}",
               f"DTSTAMP:{stamp}",
               f"DTSTART;VALUE=DATE:{d}",
               f"DTEND;VALUE=DATE:{end}",
               fold("SUMMARY:" + esc(
-                  "[{region}] {name} · {type}".format(**r))),
+                  "[{region}] {name} · {type}".format(**r) + span)),
               fold("DESCRIPTION:" + esc(
                   "구분: {kind} / {type}\n공고번호: {pblanc_no}\n"
                   "주택관리번호: {house_manage_no}".format(**r))),
