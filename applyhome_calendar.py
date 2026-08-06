@@ -2,6 +2,7 @@
 """청약홈 청약캘린더 일정 수집기.
 
 사용법:
+    python3 applyhome_calendar.py                             # 이번 달(KST), 전체
     python3 applyhome_calendar.py 202607                      # 한 달, 전체
     python3 applyhome_calendar.py 202607 202608 202609        # 여러 달
     python3 applyhome_calendar.py 202607 --region 서울 --apt  # 서울 아파트만
@@ -232,7 +233,7 @@ def main():
             months.append(a)
         i += 1
     if not months:
-        sys.exit(__doc__)
+        months = upcoming_months(1)   # 달 인자 없으면 오늘이 속한 달 (KST)
 
     rows = []
     for ym in months:
