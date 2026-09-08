@@ -12,5 +12,7 @@ date,region,name,kind,type,house_secd,house_manage_no,pblanc_no,detail_url
 20260907,서울,브라운스톤 월곡 센트럴,아파트,특별공급,01,2026000399,2026000399,/ai/aia/selectAPTLttotPblancDetail.do
 20260908,서울,브라운스톤 월곡 센트럴,아파트,1순위,01,2026000399,2026000399,/ai/aia/selectAPTLttotPblancDetail.do
 20260909,서울,브라운스톤 월곡 센트럴,아파트,1순위,01,2026000399,2026000399,/ai/aia/selectAPTLttotPblancDetail.do
+20260911,서울,더 리치먼드 미아,무순위,임의공급,11,2026940195,2026940195,/ai/aia/selectAPTRemndrLttotPblancDetailView.do
+20260911,서울,신월동 한양립스(2차),무순위,임의공급,11,2026940198,2026940198,/ai/aia/selectAPTRemndrLttotPblancDetailView.do
 20260914,서울,드파인 아르티아(2차),무순위,무순위,04,2026910233,2026910233,/ai/aia/selectAPTRemndrLttotPblancDetailView.do
 20260914,서울,청계 노르웨이숲(12차),무순위,무순위,04,2026910235,2026910235,/ai/aia/selectAPTRemndrLttotPblancDetailView.do
