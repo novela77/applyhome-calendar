@@ -93,6 +93,12 @@ def normalize(rows):
     for r in rows:
         if r.get("RESTDE_AT") == "Y":       # 공휴일 행은 일정이 아님
             continue
+        # 2026-09-12 상류 변경: 일정 없는 날에도 날짜 표시용 행이 온다
+        # (RCEPT_SE="12", HOUSE_NM/지역/공고번호 전부 null). RESTDE_AT 는 "N" 이라
+        # 위 공휴일 관문에 걸리지 않고 정렬에서 None 비교로 터졌다.
+        # 코드값이 아니라 내용 유무로 거른다 — 상류가 코드를 또 늘려도 버틴다.
+        if r.get("HOUSE_NM") is None:
+            continue
         out.append({
             "date": r["IN_DATE"],
             "region": r["SUBSCRPT_AREA_CODE_NM"],
