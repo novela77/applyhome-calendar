@@ -23,6 +23,7 @@ import csv
 import datetime
 import json
 import sys
+import time
 import urllib.request
 
 URL = "https://www.applyhome.co.kr/ai/aib/selectSubscrptCalender.do"
@@ -75,17 +76,25 @@ def upcoming_months(n):
     return out
 
 
-def fetch(yyyymm):
+def fetch(yyyymm, retries=3):
     body = json.dumps({"reqData": {"inqirePd": yyyymm}}).encode()
     req = urllib.request.Request(
         URL, data=body,
         headers={"Content-Type": "application/json; charset=UTF-8", "User-Agent": UA},
     )
-    with urllib.request.urlopen(req, timeout=20) as resp:
-        data = json.load(resp)
-    if data.get("resultCode") != 200:
-        raise RuntimeError(f"{yyyymm}: {data.get('msgRtn')}")
-    return data["schdulList"]
+    last_err = None
+    for attempt in range(retries):
+        try:
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                data = json.load(resp)
+            if data.get("resultCode") != 200:
+                raise RuntimeError(f"{yyyymm}: {data.get('msgRtn')}")
+            return data["schdulList"]
+        except Exception as e:
+            last_err = e
+            if attempt < retries - 1:
+                time.sleep(2 * (attempt + 1))
+    raise RuntimeError(f"{yyyymm} 수집 실패 ({retries}회 재시도 초과): {last_err}")
 
 
 def normalize(rows):
